@@ -32,4 +32,8 @@ public class EmployeeRepository {
                 .filter(employee -> gender.equals(employee.getGender()))
                 .collect(Collectors.toList());
     }
+
+    public List<Employee> findAllPaginated(int page, int pageSize) {
+        return this.findAll();
+    }
 }

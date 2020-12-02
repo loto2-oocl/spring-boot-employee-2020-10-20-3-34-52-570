@@ -79,4 +79,23 @@ class EmployeeServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    void should_return_2_employees_when_get_all_paginated_given_repository_with_3_employees_and_page_1_page_size_2() {
+        //given
+        int page = 1;
+        int pageSize = 2;
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        Employee employee3 = new Employee();
+        List<Employee> employees = Arrays.asList(employee1, employee2, employee3);
+        when(employeeRepository.findAll()).thenReturn(employees);
+
+        //when
+        List<Employee> actual = employeeService.getAllPaginated(page, pageSize);
+
+        //then
+        assertEquals(pageSize, actual.size());
+        assertEquals(Arrays.asList(employee1, employee2), actual);
+    }
 }

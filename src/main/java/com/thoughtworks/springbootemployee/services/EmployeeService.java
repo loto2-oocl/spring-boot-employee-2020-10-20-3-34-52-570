@@ -27,4 +27,8 @@ public class EmployeeService {
     public List<Employee> getAllByGender(String gender) {
         return this.employeeRepository.findByGender(gender);
     }
+
+    public List<Employee> getAllPaginated(int page, int pageSize) {
+        return this.employeeRepository.findAllPaginated(page, pageSize);
+    }
 }
