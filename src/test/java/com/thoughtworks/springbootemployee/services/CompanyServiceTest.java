@@ -116,4 +116,16 @@ class CompanyServiceTest {
         //then
         verify(companyRepository, times(1)).update(companyId, companyUpdate);
     }
+
+    @Test
+    void should_call_repository_delete_once_with_company_id_1_when_delete_given_company_id_1() {
+        //given
+        Integer companyId = 1;
+
+        //when
+        companyService.delete(companyId);
+
+        //then
+        verify(companyRepository, times(1)).delete(companyId);
+    }
 }
