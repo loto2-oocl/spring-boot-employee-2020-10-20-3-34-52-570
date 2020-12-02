@@ -33,6 +33,6 @@ public class EmployeeService {
     }
 
     public Employee update(Integer employeeId, Employee newEmployee) {
-        return null;
+        return this.employeeRepository.update(employeeId, newEmployee);
     }
 }
