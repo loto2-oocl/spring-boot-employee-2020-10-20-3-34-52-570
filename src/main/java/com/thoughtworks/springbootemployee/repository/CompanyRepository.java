@@ -38,6 +38,14 @@ public class CompanyRepository {
     }
 
     public Company update(Integer companyId, Company companyUpdate) {
-        return null;
+        this.findAll().stream()
+                .filter(company -> companyId.equals(company.getCompanyId()))
+                .findFirst()
+                .ifPresent(company -> {
+                    this.companyList.remove(company);
+                    this.companyList.add(companyUpdate);
+                });
+
+        return companyUpdate;
     }
 }
