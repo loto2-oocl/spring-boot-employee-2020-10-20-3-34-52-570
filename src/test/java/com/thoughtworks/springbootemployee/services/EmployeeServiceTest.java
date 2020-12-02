@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -89,6 +90,7 @@ class EmployeeServiceTest {
         Employee employee2 = new Employee();
         Employee employee3 = new Employee();
         List<Employee> employees = Arrays.asList(employee1, employee2, employee3);
+        when(employeeRepository.findAllPaginated(page, pageSize)).thenCallRealMethod();
         when(employeeRepository.findAll()).thenReturn(employees);
 
         //when

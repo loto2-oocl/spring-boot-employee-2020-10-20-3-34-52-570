@@ -34,6 +34,12 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findAllPaginated(int page, int pageSize) {
-        return this.findAll();
+        int pageToSkip = page - 1;
+        int numberOfEmployeesToSkip = pageToSkip * pageSize;
+
+        return this.findAll().stream()
+                .skip(numberOfEmployeesToSkip)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
