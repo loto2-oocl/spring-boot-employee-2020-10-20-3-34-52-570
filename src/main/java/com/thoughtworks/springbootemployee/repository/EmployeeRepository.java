@@ -18,4 +18,8 @@ public class EmployeeRepository {
         employeeList.add(newEmployee);
         return newEmployee;
     }
+
+    public Employee findById(Integer employeeId) {
+        return null;
+    }
 }

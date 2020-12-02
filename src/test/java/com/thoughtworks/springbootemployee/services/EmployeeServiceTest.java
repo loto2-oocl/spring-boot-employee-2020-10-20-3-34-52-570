@@ -39,6 +39,19 @@ class EmployeeServiceTest {
     }
 
     @Test
+    void should_return_targeted_employee_when_get_one_by_id_given_an_employee_id_repository_with_employee() {
+        //given
+        Employee expected = new Employee(1, "Tom", 18, "male", 10000);
+        when(employeeRepository.findById(any())).thenReturn(expected);
+
+        //when
+        Employee actual = employeeService.getOneById(1);
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void should_return_created_employee_when_create_given_an_empty_repository_and_employee_request() {
         //given
         Employee expected = new Employee(1, "Tom", 18, "male", 10000);

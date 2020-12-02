@@ -19,4 +19,8 @@ public class EmployeeService {
     public Employee create(Employee newEmployee) {
         return this.employeeRepository.create(newEmployee);
     }
+
+    public Employee getOneById(Integer employeeId) {
+        return null;
+    }
 }
