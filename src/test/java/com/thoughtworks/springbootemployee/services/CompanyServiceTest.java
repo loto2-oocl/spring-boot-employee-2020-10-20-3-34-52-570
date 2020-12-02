@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +33,19 @@ class CompanyServiceTest {
 
         //when
         List<Company> actual = companyService.getAll();
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void should_return_targeted_company_when_get_one_given_a_company_id_in_repository() {
+        //given
+        Company expected = new Company(1, "alibaba", 100, new ArrayList<>());
+        when(companyRepository.findById(1)).thenReturn(expected);
+
+        //when
+        Company actual = companyService.getOne(1);
 
         //then
         assertEquals(expected, actual);

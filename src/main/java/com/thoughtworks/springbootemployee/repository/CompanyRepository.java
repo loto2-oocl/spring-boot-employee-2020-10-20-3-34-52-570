@@ -13,4 +13,8 @@ public class CompanyRepository {
     public List<Company> findAll() {
         return this.companyList;
     }
+
+    public Company findById(Integer companyId) {
+        return null;
+    }
 }
