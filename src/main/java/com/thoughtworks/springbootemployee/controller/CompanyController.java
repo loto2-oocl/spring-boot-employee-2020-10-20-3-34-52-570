@@ -20,6 +20,14 @@ public class CompanyController {
         return this.companyService.getAll();
     }
 
+    @GetMapping(params = {
+            "page",
+            "pageSize"
+    })
+    public List<Company> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return this.companyService.getAllPaginated(page, pageSize);
+    }
+
     @GetMapping("/{companyId}")
     public Company getOne(@PathVariable Integer companyId) {
         return this.companyService.getOne(companyId);
