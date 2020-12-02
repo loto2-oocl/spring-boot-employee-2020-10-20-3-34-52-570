@@ -101,7 +101,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_call_repository_once_with_new_employee_of_id_1_when_update_given_update_employee_details_of_id_1() {
+    void should_call_repository_update_once_with_new_employee_of_id_1_when_update_given_update_employee_details_of_id_1() {
         //given
         Integer employeeId = 1;
         Employee newEmployee = new Employee(employeeId, "Tom updated", 18, "male", 10000);
