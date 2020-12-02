@@ -56,5 +56,9 @@ public class EmployeeRepository {
     }
 
     public void delete(Integer employeeId) {
+        this.findAll().stream()
+                .filter(employee -> employeeId.equals(employee.getId()))
+                .findFirst()
+                .ifPresent(employee -> this.employeeList.remove(employee));
     }
 }

@@ -37,5 +37,6 @@ public class EmployeeService {
     }
 
     public void delete(Integer employeeId) {
+        this.employeeRepository.delete(employeeId);
     }
 }
