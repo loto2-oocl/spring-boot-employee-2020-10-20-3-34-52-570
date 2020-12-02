@@ -18,7 +18,7 @@ public class CompanyService {
     }
 
     public List<Company> getAllPaginated(Integer page, Integer pageSize) {
-        return null;
+        return this.companyRepository.findAllPaginated(page, pageSize);
     }
 
     public Company getOne(Integer companyId) {

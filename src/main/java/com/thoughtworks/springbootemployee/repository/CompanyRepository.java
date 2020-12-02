@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
@@ -15,7 +16,13 @@ public class CompanyRepository {
     }
 
     public List<Company> findAllPaginated(Integer page, Integer pageSize) {
-        return null;
+        int pageToSkip = page - 1;
+        int numberOfCompaniesToSkip = pageToSkip * pageSize;
+
+        return this.findAll().stream()
+                .skip(numberOfCompaniesToSkip)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     public Company findById(Integer companyId) {
