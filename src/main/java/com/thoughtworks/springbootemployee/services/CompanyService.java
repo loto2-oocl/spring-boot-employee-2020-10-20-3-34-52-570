@@ -30,6 +30,6 @@ public class CompanyService {
     }
 
     public Company create(Company newCompany) {
-        return null;
+        return this.companyRepository.create(newCompany);
     }
 }
