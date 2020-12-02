@@ -70,4 +70,23 @@ class CompanyServiceTest {
         //then
         assertEquals(expected, actual);
     }
+
+    @Test
+    void should_return_2_companies_when_get_all_paginated_give_repository_with_three_companies_page_1_page_size_2() {
+        //given
+        Integer page = 1;
+        Integer pageSize = 2;
+        Company company1 = new Company();
+        Company company2 = new Company();
+        Company company3 = new Company();
+        when(companyRepository.findAllPaginated(page, pageSize)).thenCallRealMethod();
+        when(companyRepository.findAll()).thenReturn(Arrays.asList(company1, company2, company3));
+
+        //when
+        List<Company> actual = companyService.getAllPaginated(page, pageSize);
+
+        //then
+        assertEquals(pageSize, actual.size());
+        assertEquals(Arrays.asList(company1, company2), actual);
+    }
 }

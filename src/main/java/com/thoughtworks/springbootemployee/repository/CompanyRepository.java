@@ -14,6 +14,10 @@ public class CompanyRepository {
         return this.companyList;
     }
 
+    public List<Company> findAllPaginated(Integer page, Integer pageSize) {
+        return null;
+    }
+
     public Company findById(Integer companyId) {
         return this.findAll().stream()
                 .filter(company -> companyId.equals(company.getCompanyId()))
