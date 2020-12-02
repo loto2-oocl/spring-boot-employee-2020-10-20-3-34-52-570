@@ -36,4 +36,9 @@ public class CompanyController {
     public List<Employee> getCompanyEmployees(@PathVariable Integer companyId) {
         return this.companyService.getCompanyEmployees(companyId);
     }
+
+    @PostMapping
+    public Company create(@RequestBody Company newCompany) {
+        return this.companyService.create(newCompany);
+    }
 }
