@@ -19,4 +19,8 @@ public class EmployeeService {
     public List<Employee> getAll() {
         return this.employeeRepository.findAll();
     }
+
+    public Employee create(Employee expected) {
+        return null;
+    }
 }

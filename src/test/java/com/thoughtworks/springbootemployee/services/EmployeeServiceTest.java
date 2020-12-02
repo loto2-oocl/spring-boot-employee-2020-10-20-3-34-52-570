@@ -27,4 +27,19 @@ class EmployeeServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void should_return_created_employee_when_create_given_an_empty_repository_and_employee_request() {
+        //given
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        Employee expected = new Employee();
+        when(employeeRepository.create()).thenReturn(expected);
+
+        //when
+        Employee actual = employeeService.create(expected);
+
+        //then
+        assertEquals(expected, actual);
+    }
+
 }
