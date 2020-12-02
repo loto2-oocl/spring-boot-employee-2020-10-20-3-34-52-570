@@ -28,7 +28,7 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findByGender(String gender) {
-        return this.employeeList.stream()
+        return this.findAll().stream()
                 .filter(employee -> gender.equals(employee.getGender()))
                 .collect(Collectors.toList());
     }
