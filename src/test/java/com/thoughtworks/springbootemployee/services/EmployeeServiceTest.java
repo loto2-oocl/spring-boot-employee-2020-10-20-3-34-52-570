@@ -70,14 +70,16 @@ class EmployeeServiceTest {
         // given
         String gender = "male";
         Employee maleEmployee = new Employee(1, "Tom", 18, "male", 10000);
-        List<Employee> expected = Collections.singletonList(maleEmployee);
-        when(employeeRepository.findByGender(gender)).thenReturn(expected);
+        Employee femaleEmployee = new Employee(2, "FemaleTom", 18, "female", 10000);
+        List<Employee> employees = Arrays.asList(maleEmployee, femaleEmployee);
+        when(employeeRepository.findByGender(gender)).thenCallRealMethod();
+        when(employeeRepository.findAll()).thenReturn(employees);
 
         //when
         List<Employee> actual = employeeService.getAllByGender(gender);
 
         //then
-        assertEquals(expected, actual);
+        assertEquals(Arrays.asList(maleEmployee), actual);
     }
 
     @Test
