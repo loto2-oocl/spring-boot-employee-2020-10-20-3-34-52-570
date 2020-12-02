@@ -31,4 +31,8 @@ public class EmployeeService {
     public List<Employee> getAllPaginated(int page, int pageSize) {
         return this.employeeRepository.findAllPaginated(page, pageSize);
     }
+
+    public Employee update(Integer employeeId, Employee newEmployee) {
+        return null;
+    }
 }

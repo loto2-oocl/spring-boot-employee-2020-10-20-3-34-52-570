@@ -5,7 +5,6 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -99,5 +98,18 @@ class EmployeeServiceTest {
         //then
         assertEquals(pageSize, actual.size());
         assertEquals(Arrays.asList(employee1, employee2), actual);
+    }
+
+    @Test
+    void should_call_repository_once_with_new_employee_of_id_1_when_update_given_update_employee_details_of_id_1() {
+        //given
+        Integer employeeId = 1;
+        Employee newEmployee = new Employee(employeeId, "Tom updated", 18, "male", 10000);
+
+        //when
+        employeeService.update(employeeId, newEmployee);
+
+        //then
+        verify(employeeRepository, times(1)).update(employeeId, newEmployee);
     }
 }
