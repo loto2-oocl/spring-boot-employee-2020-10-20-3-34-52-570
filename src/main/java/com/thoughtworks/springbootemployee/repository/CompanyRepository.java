@@ -36,4 +36,8 @@ public class CompanyRepository {
         companyList.add(newCompany);
         return newCompany;
     }
+
+    public Company update(Integer companyId, Company companyUpdate) {
+        return null;
+    }
 }

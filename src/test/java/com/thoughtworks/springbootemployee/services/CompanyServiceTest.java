@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -102,5 +102,18 @@ class CompanyServiceTest {
 
         //then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void should_call_repository_update_once_with_new_company_of_id_1_when_update_given_update_company_details_of_id_1() {
+        //given
+        Integer companyId = 1;
+        Company companyUpdate = new Company(companyId, "alibaba", 10, new ArrayList<>());
+
+        //when
+        companyService.update(companyId, companyUpdate);
+
+        //then
+        verify(companyRepository, times(1)).update(companyId, companyUpdate);
     }
 }

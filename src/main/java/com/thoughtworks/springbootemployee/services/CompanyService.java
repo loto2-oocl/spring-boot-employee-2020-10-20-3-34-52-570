@@ -32,4 +32,8 @@ public class CompanyService {
     public Company create(Company newCompany) {
         return this.companyRepository.create(newCompany);
     }
+
+    public Company update(Integer companyId, Company companyUpdate) {
+        return null;
+    }
 }
