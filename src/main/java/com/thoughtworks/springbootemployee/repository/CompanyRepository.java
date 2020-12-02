@@ -15,6 +15,9 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer companyId) {
-        return null;
+        return this.findAll().stream()
+                .filter(company -> companyId.equals(company.getCompanyId()))
+                .findFirst()
+                .orElse(null);
     }
 }
