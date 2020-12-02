@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +41,10 @@ public class CompanyController {
     @PostMapping
     public Company create(@RequestBody Company newCompany) {
         return this.companyService.create(newCompany);
+    }
+
+    @PutMapping("/{companyId}")
+    public Company update(@PathVariable Integer companyId, @RequestBody Company companyUpdate) {
+        return this.companyService.update(companyId, companyUpdate);
     }
 }
