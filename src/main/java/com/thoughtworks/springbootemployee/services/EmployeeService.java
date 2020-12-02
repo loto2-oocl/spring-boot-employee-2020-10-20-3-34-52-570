@@ -25,6 +25,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllByGender(String gender) {
-        return null;
+        return this.employeeRepository.findByGender(gender);
     }
 }

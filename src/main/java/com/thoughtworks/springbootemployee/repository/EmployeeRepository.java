@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
@@ -27,6 +28,8 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findByGender(String gender) {
-        return null;
+        return this.employeeList.stream()
+                .filter(employee -> gender.equals(employee.getGender()))
+                .collect(Collectors.toList());
     }
 }
