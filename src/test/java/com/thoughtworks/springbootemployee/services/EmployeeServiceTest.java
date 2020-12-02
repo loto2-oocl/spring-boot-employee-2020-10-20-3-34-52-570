@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class EmployeeServiceTest {
@@ -33,7 +34,7 @@ class EmployeeServiceTest {
         EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
         EmployeeService employeeService = new EmployeeService(employeeRepository);
         Employee expected = new Employee();
-        when(employeeRepository.create()).thenReturn(expected);
+        when(employeeRepository.create(any())).thenReturn(expected);
 
         //when
         Employee actual = employeeService.create(expected);

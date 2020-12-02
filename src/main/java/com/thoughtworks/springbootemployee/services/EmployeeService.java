@@ -20,7 +20,7 @@ public class EmployeeService {
         return this.employeeRepository.findAll();
     }
 
-    public Employee create(Employee employee) {
-        return null;
+    public Employee create(Employee newEmployee) {
+        return this.employeeRepository.create(newEmployee);
     }
 }
