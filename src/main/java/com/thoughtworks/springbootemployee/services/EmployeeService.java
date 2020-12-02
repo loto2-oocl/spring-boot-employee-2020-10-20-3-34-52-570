@@ -21,6 +21,6 @@ public class EmployeeService {
     }
 
     public Employee getOneById(Integer employeeId) {
-        return null;
+        return this.employeeRepository.findById(employeeId);
     }
 }

@@ -20,6 +20,9 @@ public class EmployeeRepository {
     }
 
     public Employee findById(Integer employeeId) {
-        return null;
+        return this.employeeList.stream()
+                .filter(employee -> employeeId.equals(employee.getId()))
+                .findFirst()
+                .orElse(null);
     }
 }
