@@ -112,4 +112,16 @@ class EmployeeServiceTest {
         //then
         verify(employeeRepository, times(1)).update(employeeId, newEmployee);
     }
+
+    @Test
+    void should_call_repository_delete_once_with_employee_id_when_update_given_employee_id_to_delete() {
+        //given
+        Integer employeeId = 1;
+
+        //when
+        employeeService.delete(employeeId);
+
+        //then
+        verify(employeeRepository, times(1)).delete(employeeId);
+    }
 }
