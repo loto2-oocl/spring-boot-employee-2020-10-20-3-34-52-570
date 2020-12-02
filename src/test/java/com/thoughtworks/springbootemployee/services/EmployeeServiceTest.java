@@ -79,7 +79,7 @@ class EmployeeServiceTest {
         List<Employee> actual = employeeService.getAllByGender(gender);
 
         //then
-        assertEquals(Arrays.asList(maleEmployee), actual);
+        assertEquals(Collections.singletonList(maleEmployee), actual);
     }
 
     @Test
