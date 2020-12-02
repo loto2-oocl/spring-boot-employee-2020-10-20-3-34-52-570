@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +49,23 @@ class CompanyServiceTest {
 
         //when
         Company actual = companyService.getOne(1);
+
+        //then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void should_return_all_employees_under_company_of_given_id_when_get_company_employees_given_company_id() {
+        //given
+        Integer companyId = 1;
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        List<Employee> expected = Arrays.asList(employee1, employee2);
+        Company company = new Company(companyId, "alibaba", 100, expected);
+        when(companyRepository.findById(companyId)).thenReturn(company);
+
+        //when
+        List<Employee> actual = companyService.getCompanyEmployees(companyId);
 
         //then
         assertEquals(expected, actual);
