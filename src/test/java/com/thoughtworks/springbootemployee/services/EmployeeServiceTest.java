@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,4 +65,18 @@ class EmployeeServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void should_return_male_employee_when_get_all_by_gender_given_repository_with_one_male_and_female_employee_and_male_filter() {
+        // given
+        String gender = "male";
+        Employee maleEmployee = new Employee(1, "Tom", 18, "male", 10000);
+        List<Employee> expected = Collections.singletonList(maleEmployee);
+        when(employeeRepository.findByGender(gender)).thenReturn(expected);
+
+        //when
+        List<Employee> actual = employeeService.getAllByGender(gender);
+
+        //then
+        assertEquals(expected, actual);
+    }
 }

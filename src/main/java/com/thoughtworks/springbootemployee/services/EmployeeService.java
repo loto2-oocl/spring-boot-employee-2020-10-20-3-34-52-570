@@ -23,4 +23,8 @@ public class EmployeeService {
     public Employee getOneById(Integer employeeId) {
         return this.employeeRepository.findById(employeeId);
     }
+
+    public List<Employee> getAllByGender(String gender) {
+        return null;
+    }
 }
