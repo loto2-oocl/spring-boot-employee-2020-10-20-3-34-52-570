@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -88,5 +89,18 @@ class CompanyServiceTest {
         //then
         assertEquals(pageSize, actual.size());
         assertEquals(Arrays.asList(company1, company2), actual);
+    }
+
+    @Test
+    void should_return_created_company_when_create_given_an_empty_repository_and_company_request() {
+        //given
+        Company expected = new Company(1, "alibaba", 100, new ArrayList<>());
+        when(companyRepository.create(any())).thenReturn(expected);
+
+        //when
+        Company actual = companyService.create(expected);
+
+        //then
+        assertEquals(expected, actual);
     }
 }

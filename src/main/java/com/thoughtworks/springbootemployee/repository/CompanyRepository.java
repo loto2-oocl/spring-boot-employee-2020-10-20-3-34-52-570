@@ -31,4 +31,8 @@ public class CompanyRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Company create(Company newCompany) {
+        return null;
+    }
 }

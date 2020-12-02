@@ -28,4 +28,8 @@ public class CompanyService {
     public List<Employee> getCompanyEmployees(Integer companyId) {
         return this.companyRepository.findById(companyId).getEmployees();
     }
+
+    public Company create(Company newCompany) {
+        return null;
+    }
 }
