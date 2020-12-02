@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public class CompanyRepository {
     private List<Company> companyList = new ArrayList<>();
+
+    public List<Company> findAll() {
+        return null;
+    }
 }
