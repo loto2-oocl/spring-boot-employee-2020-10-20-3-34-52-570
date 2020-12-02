@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,7 +43,8 @@ class CompanyServiceTest {
     void should_return_targeted_company_when_get_one_given_a_company_id_in_repository() {
         //given
         Company expected = new Company(1, "alibaba", 100, new ArrayList<>());
-        when(companyRepository.findById(1)).thenReturn(expected);
+        when(companyRepository.findById(1)).thenCallRealMethod();
+        when(companyRepository.findAll()).thenReturn(Collections.singletonList(expected));
 
         //when
         Company actual = companyService.getOne(1);
