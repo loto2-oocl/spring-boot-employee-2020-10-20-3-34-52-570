@@ -44,4 +44,19 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].employeesNumber").value(100))
                 .andExpect(jsonPath("$[0].employees").isEmpty());
     }
+
+    @Test
+    void should_return_specific_company_when_called_get_one_by_id_given_company_id_and_company() throws Exception {
+        //given
+        Company company = new Company("OOCL", 100, Collections.emptyList());
+        companyRepository.insert(company);
+
+        //when
+        mockMvc.perform(get("/companies/"+company.getCompanyId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").isString())
+                .andExpect(jsonPath("$.companyName").value("OOCL"))
+                .andExpect(jsonPath("$.employeesNumber").value(100))
+                .andExpect(jsonPath("$.employees").isEmpty());
+    }
 }
