@@ -88,4 +88,22 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[1].gender").value("Male"))
                 .andExpect(jsonPath("$[1].salary").value(10001));
     }
+
+    @Test
+    void should_return_all_male_employees_when_called_get_all_given_employees_param_gender_male() throws Exception {
+        //given
+        Employee employee1 = new Employee("Tom", 18, "Male", 10000);
+        Employee employee2 = new Employee("Tom1", 19, "Female", 10001);
+        employeeRepository.insert(Arrays.asList(employee1, employee2));
+
+        //when
+        mockMvc.perform(get("/employees")
+                .param("gender", "Male"))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Tom"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(10000));
+    }
 }
