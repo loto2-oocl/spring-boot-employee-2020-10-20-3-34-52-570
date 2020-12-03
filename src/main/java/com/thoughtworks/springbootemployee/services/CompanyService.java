@@ -4,6 +4,8 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,26 +20,35 @@ public class CompanyService {
     }
 
     public List<Company> getAllPaginated(Integer page, Integer pageSize) {
-        return this.companyRepository.findAllPaginated(page, pageSize);
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+
+        return this.companyRepository.findAll(pageable).toList();
     }
 
-    public Company getOne(Integer companyId) {
-        return this.companyRepository.findById(companyId);
+    public Company getOne(String companyId) {
+        return this.companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
     }
 
-    public List<Employee> getCompanyEmployees(Integer companyId) {
-        return this.companyRepository.findCompanyEmployees(companyId);
+    public List<Employee> getCompanyEmployees(String companyId) {
+        Company company = this.companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
+
+        return company.getEmployees();
     }
 
     public Company create(Company newCompany) {
-        return this.companyRepository.create(newCompany);
+        return this.companyRepository.insert(newCompany);
     }
 
-    public Company update(Integer companyId, Company companyUpdate) {
-        return this.companyRepository.update(companyId, companyUpdate);
+    public Company update(String companyId, Company companyUpdate) {
+        if (!this.companyRepository.existsById(companyId)) {
+            throw new RuntimeException();
+        }
+
+        companyUpdate.setCompanyId(companyId);
+        return this.companyRepository.save(companyUpdate);
     }
 
-    public void delete(Integer companyId) {
-        this.companyRepository.delete(companyId);
+    public void delete(String companyId) {
+        this.companyRepository.deleteById(companyId);
     }
 }

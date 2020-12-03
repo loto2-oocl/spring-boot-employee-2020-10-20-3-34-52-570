@@ -29,12 +29,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyId}")
-    public Company getOne(@PathVariable Integer companyId) {
+    public Company getOne(@PathVariable String companyId) {
         return this.companyService.getOne(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getCompanyEmployees(@PathVariable Integer companyId) {
+    public List<Employee> getCompanyEmployees(@PathVariable String companyId) {
         return this.companyService.getCompanyEmployees(companyId);
     }
 
@@ -44,13 +44,13 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyId}")
-    public Company update(@PathVariable Integer companyId, @RequestBody Company companyUpdate) {
+    public Company update(@PathVariable String companyId, @RequestBody Company companyUpdate) {
         return this.companyService.update(companyId, companyUpdate);
     }
 
     @DeleteMapping("/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer companyId) {
+    public void delete(@PathVariable String companyId) {
         this.companyService.delete(companyId);
     }
 }
