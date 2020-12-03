@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,8 +42,7 @@ class CompanyServiceTest {
     void should_return_targeted_company_when_get_one_given_a_company_id_in_repository() {
         //given
         Company expected = new Company(1, "alibaba", 100, new ArrayList<>());
-        when(companyRepository.findById(1)).thenCallRealMethod();
-        when(companyRepository.findAll()).thenReturn(Collections.singletonList(expected));
+        when(companyRepository.findById(any())).thenReturn(expected);
 
         //when
         Company actual = companyService.getOne(1);
@@ -60,7 +58,7 @@ class CompanyServiceTest {
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
         List<Employee> expected = Arrays.asList(employee1, employee2);
-        when(companyRepository.findCompanyEmployees(companyId)).thenReturn(expected);
+        when(companyRepository.findCompanyEmployees(any())).thenReturn(expected);
 
         //when
         List<Employee> actual = companyService.getCompanyEmployees(companyId);
@@ -76,16 +74,15 @@ class CompanyServiceTest {
         Integer pageSize = 2;
         Company company1 = new Company();
         Company company2 = new Company();
-        Company company3 = new Company();
-        when(companyRepository.findAllPaginated(page, pageSize)).thenCallRealMethod();
-        when(companyRepository.findAll()).thenReturn(Arrays.asList(company1, company2, company3));
+        List<Company> expected = Arrays.asList(company1, company2);
+        when(companyRepository.findAllPaginated(any(), any())).thenReturn(expected);
 
         //when
         List<Company> actual = companyService.getAllPaginated(page, pageSize);
 
         //then
         assertEquals(pageSize, actual.size());
-        assertEquals(Arrays.asList(company1, company2), actual);
+        assertEquals(expected, actual);
     }
 
     @Test

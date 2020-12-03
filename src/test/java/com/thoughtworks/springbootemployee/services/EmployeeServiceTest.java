@@ -68,16 +68,14 @@ class EmployeeServiceTest {
         // given
         String gender = "male";
         Employee maleEmployee = new Employee(1, "Tom", 18, "male", 10000);
-        Employee femaleEmployee = new Employee(2, "FemaleTom", 18, "female", 10000);
-        List<Employee> employees = Arrays.asList(maleEmployee, femaleEmployee);
-        when(employeeRepository.findByGender(gender)).thenCallRealMethod();
-        when(employeeRepository.findAll()).thenReturn(employees);
+        List<Employee> expected = Collections.singletonList(maleEmployee);
+        when(employeeRepository.findByGender(any())).thenReturn(expected);
 
         //when
         List<Employee> actual = employeeService.getAllByGender(gender);
 
         //then
-        assertEquals(Collections.singletonList(maleEmployee), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -87,17 +85,15 @@ class EmployeeServiceTest {
         int pageSize = 2;
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
-        Employee employee3 = new Employee();
-        List<Employee> employees = Arrays.asList(employee1, employee2, employee3);
-        when(employeeRepository.findAllPaginated(page, pageSize)).thenCallRealMethod();
-        when(employeeRepository.findAll()).thenReturn(employees);
+        List<Employee> expected = Arrays.asList(employee1, employee2);
+        when(employeeRepository.findAllPaginated(page, pageSize)).thenReturn(expected);
 
         //when
         List<Employee> actual = employeeService.getAllPaginated(page, pageSize);
 
         //then
         assertEquals(pageSize, actual.size());
-        assertEquals(Arrays.asList(employee1, employee2), actual);
+        assertEquals(expected, actual);
     }
 
     @Test
