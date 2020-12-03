@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -105,5 +107,28 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].age").value(18))
                 .andExpect(jsonPath("$[0].gender").value("Male"))
                 .andExpect(jsonPath("$[0].salary").value(10000));
+    }
+
+    @Test
+    void should_return_created_employee_when_called_create_given_employee() throws Exception {
+        //given
+        String employeeJson = "{\n" +
+                "    \"name\": \"tom\",\n" +
+                "    \"age\": 19,\n" +
+                "    \"gender\": \"female\",\n" +
+                "    \"salary\": 7000\n" +
+                "}";
+
+
+        //when
+        mockMvc.perform(post("/employees")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(employeeJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("tom"))
+                .andExpect(jsonPath("$.age").value(19))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(7000));
     }
 }
