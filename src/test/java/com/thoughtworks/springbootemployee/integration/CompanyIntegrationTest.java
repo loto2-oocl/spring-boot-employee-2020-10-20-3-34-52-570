@@ -59,7 +59,7 @@ public class CompanyIntegrationTest {
         companyRepository.insert(company);
 
         //when
-        mockMvc.perform(get("/companies/"+company.getCompanyId()))
+        mockMvc.perform(get("/companies/" + company.getCompanyId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("OOCL"))
@@ -91,4 +91,26 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[1].gender").value("female"))
                 .andExpect(jsonPath("$[1].salary").value(1001));
     }
+
+    @Test
+    void should_return_2_companies_when_called_get_paginated_given_3_companies_page_1_page_size_2() throws Exception {
+        //given
+        Company company1 = new Company("OOCL", 100, Collections.emptyList());
+        Company company2 = new Company("TEST", 100, Collections.emptyList());
+        companyRepository.insert(Arrays.asList(company1, company2));
+
+        //when
+        mockMvc.perform(get("/companies?page=1&pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].companyId").isString())
+                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+                .andExpect(jsonPath("$[0].employeesNumber").value(100))
+                .andExpect(jsonPath("$[0].employees").isEmpty())
+                .andExpect(jsonPath("$[1].companyId").isString())
+                .andExpect(jsonPath("$[1].companyName").value("Test"))
+                .andExpect(jsonPath("$[1].employeesNumber").value(100))
+                .andExpect(jsonPath("$[1].employees").isEmpty());
+    }
+
 }
