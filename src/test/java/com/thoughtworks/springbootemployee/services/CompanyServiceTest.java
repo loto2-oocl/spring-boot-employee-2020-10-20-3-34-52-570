@@ -60,8 +60,7 @@ class CompanyServiceTest {
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
         List<Employee> expected = Arrays.asList(employee1, employee2);
-        Company company = new Company(companyId, "alibaba", 100, expected);
-        when(companyRepository.findById(companyId)).thenReturn(company);
+        when(companyRepository.findCompanyEmployees(companyId)).thenReturn(expected);
 
         //when
         List<Employee> actual = companyService.getCompanyEmployees(companyId);
