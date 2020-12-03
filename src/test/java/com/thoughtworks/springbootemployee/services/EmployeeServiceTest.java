@@ -25,7 +25,7 @@ class EmployeeServiceTest {
     EmployeeRepository employeeRepository;
 
     @Test
-    public void should_return_all_employee_when_get_all_given_repository_with_all_employee() {
+    void should_return_all_employee_when_get_all_given_repository_with_all_employee() {
         //given
         List<Employee> expected = Arrays.asList(new Employee(), new Employee());
         when(employeeRepository.findAll()).thenReturn(expected);
