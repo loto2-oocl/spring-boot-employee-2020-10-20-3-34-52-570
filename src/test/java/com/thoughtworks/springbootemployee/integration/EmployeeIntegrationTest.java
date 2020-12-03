@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -74,8 +75,8 @@ public class EmployeeIntegrationTest {
 
         //when
         mockMvc.perform(get("/employees")
-                    .param("page", "1")
-                    .param("pageSize", "2"))
+                .param("page", "1")
+                .param("pageSize", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id").isString())
@@ -121,8 +122,8 @@ public class EmployeeIntegrationTest {
 
         //when
         mockMvc.perform(post("/employees")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(employeeJson))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isString())
                 .andExpect(jsonPath("$.name").value("tom"))
@@ -153,5 +154,17 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$.age").value(19))
                 .andExpect(jsonPath("$.gender").value("female"))
                 .andExpect(jsonPath("$.salary").value(7000));
+    }
+
+    @Test
+    void should_delete_employee_when_called_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee = new Employee("tom", 18, "male", 10);
+        employeeRepository.insert(employee);
+
+        //when
+        mockMvc.perform(delete("/employees/" + employee.getId()))
+                .andExpect(status().isNoContent());
+        assertEquals(0, employeeRepository.findAll().size());
     }
 }
