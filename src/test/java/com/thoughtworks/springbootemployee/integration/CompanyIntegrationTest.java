@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -156,5 +157,17 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value("Test1"))
                 .andExpect(jsonPath("$.employeesNumber").value(1000))
                 .andExpect(jsonPath("$.employees").isEmpty());
+    }
+
+    @Test
+    void should_delete_company_when_called_delete_given_company_id() throws Exception {
+        //given
+        Company company = new Company("Test", 100, Collections.emptyList());
+        companyRepository.insert(company);
+
+        //when
+        mockMvc.perform(delete("/companies/" + company.getCompanyId()))
+                .andExpect(status().isNoContent());
+        assertEquals(0, companyRepository.findAll().size());
     }
 }
