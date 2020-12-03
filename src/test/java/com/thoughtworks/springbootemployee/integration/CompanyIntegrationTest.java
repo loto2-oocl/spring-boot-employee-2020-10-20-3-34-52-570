@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -133,6 +132,29 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyId").isString())
                 .andExpect(jsonPath("$.companyName").value("Test"))
                 .andExpect(jsonPath("$.employeesNumber").value(100))
+                .andExpect(jsonPath("$.employees").isEmpty());
+    }
+
+    @Test
+    void should_return_updated_company_when_called_with_update_given_company_id_and_update_company() throws Exception {
+        //given
+        Company company = new Company("Test", 100, Collections.emptyList());
+        companyRepository.insert(company);
+        String updateCompanyJson = "{\n" +
+                "    \"companyName\": \"Test1\",\n" +
+                "    \"employeesNumber\": 1000,\n" +
+                "    \"employees\": [\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        mockMvc.perform(put("/companies/" + company.getCompanyId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateCompanyJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companyId").value(company.getCompanyId()))
+                .andExpect(jsonPath("$.companyName").value("Test1"))
+                .andExpect(jsonPath("$.employeesNumber").value(1000))
                 .andExpect(jsonPath("$.employees").isEmpty());
     }
 }
