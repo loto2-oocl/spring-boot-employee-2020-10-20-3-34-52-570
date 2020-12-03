@@ -110,7 +110,7 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].employeesNumber").value(100))
                 .andExpect(jsonPath("$[0].employees").isEmpty())
                 .andExpect(jsonPath("$[1].companyId").isString())
-                .andExpect(jsonPath("$[1].companyName").value("Test"))
+                .andExpect(jsonPath("$[1].companyName").value("TEST"))
                 .andExpect(jsonPath("$[1].employeesNumber").value(100))
                 .andExpect(jsonPath("$[1].employees").isEmpty());
     }
