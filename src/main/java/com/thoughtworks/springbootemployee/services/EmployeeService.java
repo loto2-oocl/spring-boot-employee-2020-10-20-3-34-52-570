@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -42,19 +41,12 @@ public class EmployeeService {
     }
 
     public Employee update(String employeeId, Employee newEmployee) {
-        Optional<Employee> optionalEmployee = this.employeeRepository.findById(employeeId);
-
-        if (!optionalEmployee.isPresent()) {
+        if (!this.employeeRepository.existsById(employeeId)) {
             throw new RuntimeException();
         }
 
-        Employee employee = optionalEmployee.get();
-        employee.setName(newEmployee.getName());
-        employee.setAge(newEmployee.getAge());
-        employee.setGender(newEmployee.getGender());
-        employee.setSalary(newEmployee.getSalary());
-
-        return this.employeeRepository.save(employee);
+        newEmployee.setId(employeeId);
+        return this.employeeRepository.save(newEmployee);
     }
 
     public void delete(String employeeId) {

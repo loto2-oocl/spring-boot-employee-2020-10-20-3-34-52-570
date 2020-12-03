@@ -107,7 +107,7 @@ class EmployeeServiceTest {
         //given
         String employeeId = "1";
         Employee newEmployee = new Employee(employeeId, "Tom updated", 18, "male", 10000);
-        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(newEmployee));
+        when(employeeRepository.existsById(employeeId)).thenReturn(true);
 
         //when
         employeeService.update(employeeId, newEmployee);
