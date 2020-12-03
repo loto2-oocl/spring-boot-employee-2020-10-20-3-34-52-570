@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,11 +26,15 @@ public class CompanyIntegrationTest {
     CompanyRepository companyRepository;
 
     @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
     MockMvc mockMvc;
 
     @AfterEach
     void tearEach() {
         companyRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -58,5 +65,30 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value("OOCL"))
                 .andExpect(jsonPath("$.employeesNumber").value(100))
                 .andExpect(jsonPath("$.employees").isEmpty());
+    }
+
+    @Test
+    void should_return_employees_list_when_called_get_company_employees_given_id_and_company() throws Exception {
+        //given
+        Employee employee1 = new Employee("Tom", 18, "male", 1000);
+        Employee employee2 = new Employee("Tom1", 19, "female", 1001);
+        employeeRepository.insert(Arrays.asList(employee1, employee2));
+        Company company = new Company("OOCL", 100, Arrays.asList(employee1, employee2));
+        companyRepository.insert(company);
+
+        //when
+        mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").isString())
+                .andExpect(jsonPath("$[0].name").value("Tom"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(1000))
+                .andExpect(jsonPath("$[1].id").isString())
+                .andExpect(jsonPath("$[1].name").value("Tom1"))
+                .andExpect(jsonPath("$[1].age").value(19))
+                .andExpect(jsonPath("$[1].gender").value("female"))
+                .andExpect(jsonPath("$[1].salary").value(1001));
     }
 }
