@@ -39,6 +39,7 @@ public class CompanyController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Company create(@RequestBody Company newCompany) {
         return this.companyService.create(newCompany);
     }

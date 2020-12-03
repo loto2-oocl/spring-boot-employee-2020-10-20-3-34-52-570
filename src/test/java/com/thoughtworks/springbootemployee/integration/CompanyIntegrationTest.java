@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -113,4 +115,24 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[1].employees").isEmpty());
     }
 
+    @Test
+    void should_return_created_company_when_called_create_given_company() throws Exception {
+        //given
+        String companyJson = "{\n" +
+                "    \"companyName\": \"Test\",\n" +
+                "    \"employeesNumber\": 100,\n" +
+                "    \"employees\": [\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        mockMvc.perform(post("/companies")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(companyJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.companyId").isString())
+                .andExpect(jsonPath("$.companyName").value("Test"))
+                .andExpect(jsonPath("$.employeesNumber").value(100))
+                .andExpect(jsonPath("$.employees").isEmpty());
+    }
 }
