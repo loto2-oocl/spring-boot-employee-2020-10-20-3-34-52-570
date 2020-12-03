@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -126,6 +125,30 @@ public class EmployeeIntegrationTest {
                     .content(employeeJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isString())
+                .andExpect(jsonPath("$.name").value("tom"))
+                .andExpect(jsonPath("$.age").value(19))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(7000));
+    }
+
+    @Test
+    void should_return_updated_employee_when_called_update_given_employee_id_and_update_employee() throws Exception {
+        //given
+        Employee employee = new Employee("tom", 18, "male", 10);
+        employeeRepository.insert(employee);
+        String updateEmployeeJson = "{\n" +
+                "    \"name\": \"tom\",\n" +
+                "    \"age\": 19,\n" +
+                "    \"gender\": \"female\",\n" +
+                "    \"salary\": 7000\n" +
+                "}";
+
+        //when
+        mockMvc.perform(put("/employees/" + employee.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateEmployeeJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(employee.getId()))
                 .andExpect(jsonPath("$.name").value("tom"))
                 .andExpect(jsonPath("$.age").value(19))
                 .andExpect(jsonPath("$.gender").value("female"))
