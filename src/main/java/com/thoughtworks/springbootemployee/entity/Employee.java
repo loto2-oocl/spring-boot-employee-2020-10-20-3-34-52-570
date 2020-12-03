@@ -1,13 +1,12 @@
 package com.thoughtworks.springbootemployee.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document
 public class Employee {
-    @Id
-    @Indexed(unique = true)
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String name;
     private Integer age;
