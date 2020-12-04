@@ -26,13 +26,14 @@ public class CompanyService {
     }
 
     public Company getOne(String companyId) {
-        return this.companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
+        return this.companyRepository.findById(companyId)
+            .orElseThrow(RuntimeException::new);
     }
 
     public List<Employee> getCompanyEmployees(String companyId) {
-        Company company = this.companyRepository.findById(companyId).orElseThrow(RuntimeException::new);
-
-        return company.getEmployees();
+        return this.companyRepository.findById(companyId)
+            .orElseThrow(RuntimeException::new)
+            .getEmployees();
     }
 
     public Company create(Company newCompany) {
