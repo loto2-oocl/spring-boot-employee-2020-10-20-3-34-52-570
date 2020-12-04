@@ -34,7 +34,7 @@ class CompanyIntegrationTest {
     MockMvc mockMvc;
 
     @AfterEach
-    void tearEach() {
+    void tearDown() {
         companyRepository.deleteAll();
         employeeRepository.deleteAll();
     }
