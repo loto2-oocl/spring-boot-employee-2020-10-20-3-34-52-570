@@ -25,7 +25,7 @@ public class CompanyController {
             "pageSize"
     })
     public List<Company> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return this.companyService.getAllPaginated(page, pageSize);
+        return this.companyService.getAllPaginated(page, pageSize).getContent();
     }
 
     @GetMapping("/{companyId}")

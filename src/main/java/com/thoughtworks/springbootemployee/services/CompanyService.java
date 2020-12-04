@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ public class CompanyService {
         return this.companyRepository.findAll();
     }
 
-    public List<Company> getAllPaginated(Integer page, Integer pageSize) {
+    public Page<Company> getAllPaginated(Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize);
 
-        return this.companyRepository.findAll(pageable).toList();
+        return this.companyRepository.findAll(pageable);
     }
 
     public Company getOne(String companyId) {
