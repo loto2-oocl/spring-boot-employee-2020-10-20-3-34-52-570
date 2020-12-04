@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,9 @@ import java.util.List;
 public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<Company> getAll() {
         return this.companyRepository.findAll();
@@ -33,9 +37,11 @@ public class CompanyService {
     }
 
     public List<Employee> getCompanyEmployees(String companyId) {
-        return this.companyRepository.findById(companyId)
-            .orElseThrow(() -> new CompanyNotFoundException(companyId))
-            .getEmployees();
+        if (!this.companyRepository.existsById(companyId)) {
+            throw new CompanyNotFoundException(companyId);
+        }
+
+        return this.employeeRepository.findAllByCompanyId(companyId);
     }
 
     public Company create(Company newCompany) {

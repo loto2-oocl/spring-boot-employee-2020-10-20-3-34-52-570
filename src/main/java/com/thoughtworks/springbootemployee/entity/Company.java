@@ -14,23 +14,18 @@ public class Company {
     private String companyName;
     private Integer employeesNumber;
 
-    @DBRef
-    private List<Employee> employees;
-
     public Company() {
     }
 
-    public Company(String companyName, Integer employeesNumber, List<Employee> employees) {
+    public Company(String companyName, Integer employeesNumber) {
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
-        this.employees = employees;
     }
 
-    public Company(String companyId, String companyName, Integer employeesNumber, List<Employee> employees) {
+    public Company(String companyId, String companyName, Integer employeesNumber) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
-        this.employees = employees;
     }
 
     public String getCompanyId() {
@@ -43,10 +38,6 @@ public class Company {
 
     public Integer getEmployeesNumber() {
         return employeesNumber;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
     }
 
     public void setCompanyId(String companyId) {

@@ -142,6 +142,7 @@ class EmployeeIntegrationTest {
             "    \"name\": \"tom\",\n" +
             "    \"age\": 19,\n" +
             "    \"gender\": \"female\",\n" +
+            "    \"companyId\": \"1\",\n" +
             "    \"salary\": 7000\n" +
             "}";
 
@@ -154,6 +155,7 @@ class EmployeeIntegrationTest {
             .andExpect(jsonPath("$.name").value("tom"))
             .andExpect(jsonPath("$.age").value(19))
             .andExpect(jsonPath("$.gender").value("female"))
+            .andExpect(jsonPath("$.companyId").value("1"))
             .andExpect(jsonPath("$.salary").value(7000));
     }
 

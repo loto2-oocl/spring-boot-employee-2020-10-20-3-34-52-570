@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,9 @@ class CompanyServiceTest {
 
     @Mock
     CompanyRepository companyRepository;
+
+    @Mock
+    EmployeeRepository employeeRepository;
 
     @Test
     void should_return_all_companies_when_get_all_given_repository_with_all_companies() {
@@ -46,7 +49,7 @@ class CompanyServiceTest {
     @Test
     void should_return_targeted_company_when_get_one_given_a_company_id_in_repository() {
         //given
-        Company expected = new Company("1", "alibaba", 100, new ArrayList<>());
+        Company expected = new Company("1", "alibaba", 100);
         when(companyRepository.findById("1")).thenReturn(Optional.of(expected));
 
         //when
@@ -78,8 +81,8 @@ class CompanyServiceTest {
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
         List<Employee> expected = Arrays.asList(employee1, employee2);
-        Company company = new Company(companyId, "Test", 100, expected);
-        when(companyRepository.findById(companyId)).thenReturn(Optional.of(company));
+        when(companyRepository.existsById(companyId)).thenReturn(true);
+        when(employeeRepository.findAllByCompanyId(companyId)).thenReturn(expected);
 
         //when
         List<Employee> actual = companyService.getCompanyEmployees(companyId);
@@ -92,7 +95,7 @@ class CompanyServiceTest {
     void should_throw_company_not_found_exception_when_get_company_employees_given_company_id_not_exists() {
         //given
         String companyId = "1";
-        when(companyRepository.findById(companyId)).thenReturn(Optional.empty());
+        when(companyRepository.existsById(companyId)).thenReturn(false);
 
         //when
         assertThrows(
@@ -122,7 +125,7 @@ class CompanyServiceTest {
     @Test
     void should_return_created_company_when_create_given_an_empty_repository_and_company_request() {
         //given
-        Company expected = new Company("1", "alibaba", 100, new ArrayList<>());
+        Company expected = new Company("1", "alibaba", 100);
         when(companyRepository.insert(expected)).thenReturn(expected);
 
         //when
@@ -136,7 +139,7 @@ class CompanyServiceTest {
     void should_return_updated_company_when_update_given_company_id_and_company_update_request() {
         //given
         String companyId = "1";
-        Company newCompany = new Company(companyId, "alibaba", 10, new ArrayList<>());
+        Company newCompany = new Company(companyId, "alibaba", 10);
         when(companyRepository.existsById(companyId)).thenReturn(true);
         when(companyRepository.save(newCompany)).thenReturn(newCompany);
 

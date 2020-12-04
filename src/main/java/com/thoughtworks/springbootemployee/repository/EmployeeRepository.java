@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EmployeeRepository extends MongoRepository<Employee, String> {
     List<Employee> findAllByGender(String gender);
+    List<Employee> findAllByCompanyId(String companyId);
 }
