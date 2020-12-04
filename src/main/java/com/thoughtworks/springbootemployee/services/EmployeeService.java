@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class EmployeeService {
 
     public Employee update(String employeeId, Employee newEmployee) {
         if (!this.employeeRepository.existsById(employeeId)) {
-            throw new RuntimeException();
+            throw new EmployeeNotFoundException(String.format("Employee with id:%s not found", employeeId));
         }
 
         newEmployee.setId(employeeId);
