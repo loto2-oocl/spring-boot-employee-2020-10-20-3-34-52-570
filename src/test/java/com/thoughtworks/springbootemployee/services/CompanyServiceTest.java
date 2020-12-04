@@ -81,7 +81,7 @@ class CompanyServiceTest {
         Company company2 = new Company();
         List<Company> expected = Arrays.asList(company1, company2);
         Page<Company> companyPage = new PageImpl<>(expected);
-        when(companyRepository.findAll((Pageable) any())).thenReturn(companyPage);
+        when(companyRepository.findAll((Pageable)any())).thenReturn(companyPage);
 
         //when
         List<Company> actual = companyService.getAllPaginated(page, pageSize);

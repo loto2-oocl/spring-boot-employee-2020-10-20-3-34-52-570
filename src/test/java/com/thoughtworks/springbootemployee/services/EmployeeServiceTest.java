@@ -92,7 +92,7 @@ class EmployeeServiceTest {
         Employee employee2 = new Employee();
         List<Employee> expected = Arrays.asList(employee1, employee2);
         Page<Employee> employeePage = new PageImpl<>(expected);
-        when(employeeRepository.findAll((Pageable) any())).thenReturn(employeePage);
+        when(employeeRepository.findAll((Pageable)any())).thenReturn(employeePage);
 
         //when
         List<Employee> actual = employeeService.getAllPaginated(page, pageSize);

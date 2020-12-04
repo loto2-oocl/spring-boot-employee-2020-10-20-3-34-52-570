@@ -47,11 +47,11 @@ public class CompanyIntegrationTest {
 
         //when
         mockMvc.perform(get("/companies"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].companyId").isString())
-                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
-                .andExpect(jsonPath("$[0].employeesNumber").value(100))
-                .andExpect(jsonPath("$[0].employees").isEmpty());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].companyId").isString())
+            .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+            .andExpect(jsonPath("$[0].employeesNumber").value(100))
+            .andExpect(jsonPath("$[0].employees").isEmpty());
     }
 
     @Test
@@ -62,11 +62,11 @@ public class CompanyIntegrationTest {
 
         //when
         mockMvc.perform(get("/companies/" + company.getCompanyId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyId").isString())
-                .andExpect(jsonPath("$.companyName").value("OOCL"))
-                .andExpect(jsonPath("$.employeesNumber").value(100))
-                .andExpect(jsonPath("$.employees").isEmpty());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.companyId").isString())
+            .andExpect(jsonPath("$.companyName").value("OOCL"))
+            .andExpect(jsonPath("$.employeesNumber").value(100))
+            .andExpect(jsonPath("$.employees").isEmpty());
     }
 
     @Test
@@ -80,18 +80,18 @@ public class CompanyIntegrationTest {
 
         //when
         mockMvc.perform(get("/companies/" + company.getCompanyId() + "/employees"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").isString())
-                .andExpect(jsonPath("$[0].name").value("Tom"))
-                .andExpect(jsonPath("$[0].age").value(18))
-                .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value(1000))
-                .andExpect(jsonPath("$[1].id").isString())
-                .andExpect(jsonPath("$[1].name").value("Tom1"))
-                .andExpect(jsonPath("$[1].age").value(19))
-                .andExpect(jsonPath("$[1].gender").value("female"))
-                .andExpect(jsonPath("$[1].salary").value(1001));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(2)))
+            .andExpect(jsonPath("$[0].id").isString())
+            .andExpect(jsonPath("$[0].name").value("Tom"))
+            .andExpect(jsonPath("$[0].age").value(18))
+            .andExpect(jsonPath("$[0].gender").value("male"))
+            .andExpect(jsonPath("$[0].salary").value(1000))
+            .andExpect(jsonPath("$[1].id").isString())
+            .andExpect(jsonPath("$[1].name").value("Tom1"))
+            .andExpect(jsonPath("$[1].age").value(19))
+            .andExpect(jsonPath("$[1].gender").value("female"))
+            .andExpect(jsonPath("$[1].salary").value(1001));
     }
 
     @Test
@@ -103,37 +103,37 @@ public class CompanyIntegrationTest {
 
         //when
         mockMvc.perform(get("/companies?page=1&pageSize=2"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].companyId").isString())
-                .andExpect(jsonPath("$[0].companyName").value("OOCL"))
-                .andExpect(jsonPath("$[0].employeesNumber").value(100))
-                .andExpect(jsonPath("$[0].employees").isEmpty())
-                .andExpect(jsonPath("$[1].companyId").isString())
-                .andExpect(jsonPath("$[1].companyName").value("TEST"))
-                .andExpect(jsonPath("$[1].employeesNumber").value(100))
-                .andExpect(jsonPath("$[1].employees").isEmpty());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(2)))
+            .andExpect(jsonPath("$[0].companyId").isString())
+            .andExpect(jsonPath("$[0].companyName").value("OOCL"))
+            .andExpect(jsonPath("$[0].employeesNumber").value(100))
+            .andExpect(jsonPath("$[0].employees").isEmpty())
+            .andExpect(jsonPath("$[1].companyId").isString())
+            .andExpect(jsonPath("$[1].companyName").value("TEST"))
+            .andExpect(jsonPath("$[1].employeesNumber").value(100))
+            .andExpect(jsonPath("$[1].employees").isEmpty());
     }
 
     @Test
     void should_return_created_company_when_called_create_given_company() throws Exception {
         //given
         String companyJson = "{\n" +
-                "    \"companyName\": \"Test\",\n" +
-                "    \"employeesNumber\": 100,\n" +
-                "    \"employees\": [\n" +
-                "    ]\n" +
-                "}";
+            "    \"companyName\": \"Test\",\n" +
+            "    \"employeesNumber\": 100,\n" +
+            "    \"employees\": [\n" +
+            "    ]\n" +
+            "}";
 
         //when
         mockMvc.perform(post("/companies")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(companyJson))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.companyId").isString())
-                .andExpect(jsonPath("$.companyName").value("Test"))
-                .andExpect(jsonPath("$.employeesNumber").value(100))
-                .andExpect(jsonPath("$.employees").isEmpty());
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(companyJson))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.companyId").isString())
+            .andExpect(jsonPath("$.companyName").value("Test"))
+            .andExpect(jsonPath("$.employeesNumber").value(100))
+            .andExpect(jsonPath("$.employees").isEmpty());
     }
 
     @Test
@@ -142,21 +142,21 @@ public class CompanyIntegrationTest {
         Company company = new Company("Test", 100, Collections.emptyList());
         companyRepository.insert(company);
         String updateCompanyJson = "{\n" +
-                "    \"companyName\": \"Test1\",\n" +
-                "    \"employeesNumber\": 1000,\n" +
-                "    \"employees\": [\n" +
-                "    ]\n" +
-                "}";
+            "    \"companyName\": \"Test1\",\n" +
+            "    \"employeesNumber\": 1000,\n" +
+            "    \"employees\": [\n" +
+            "    ]\n" +
+            "}";
 
         //when
         mockMvc.perform(put("/companies/" + company.getCompanyId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(updateCompanyJson))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.companyId").value(company.getCompanyId()))
-                .andExpect(jsonPath("$.companyName").value("Test1"))
-                .andExpect(jsonPath("$.employeesNumber").value(1000))
-                .andExpect(jsonPath("$.employees").isEmpty());
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(updateCompanyJson))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.companyId").value(company.getCompanyId()))
+            .andExpect(jsonPath("$.companyName").value("Test1"))
+            .andExpect(jsonPath("$.employeesNumber").value(1000))
+            .andExpect(jsonPath("$.employees").isEmpty());
     }
 
     @Test
@@ -167,7 +167,7 @@ public class CompanyIntegrationTest {
 
         //when
         mockMvc.perform(delete("/companies/" + company.getCompanyId()))
-                .andExpect(status().isNoContent());
+            .andExpect(status().isNoContent());
         assertEquals(0, companyRepository.findAll().size());
     }
 }
