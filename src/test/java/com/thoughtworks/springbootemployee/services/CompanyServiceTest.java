@@ -89,6 +89,20 @@ class CompanyServiceTest {
     }
 
     @Test
+    void should_throw_company_not_found_exception_when_get_company_employees_given_company_id_not_exists() {
+        //given
+        String companyId = "1";
+        when(companyRepository.findById(companyId)).thenReturn(Optional.empty());
+
+        //when
+        assertThrows(
+            CompanyNotFoundException.class,
+            () -> companyService.getCompanyEmployees(companyId),
+            "Company with id:1 not found"
+        );
+    }
+
+    @Test
     void should_return_2_companies_when_get_all_paginated_give_repository_with_three_companies_page_1_page_size_2() {
         //given
         Integer page = 1;
