@@ -103,7 +103,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void should_call_repository_update_once_with_new_company_of_id_1_when_update_given_update_company_details_of_id_1() {
+    void should_return_updated_company_when_update_given_company_id_and_company_update_request() {
         //given
         String companyId = "1";
         Company newCompany = new Company(companyId, "alibaba", 10, new ArrayList<>());
