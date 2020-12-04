@@ -102,7 +102,11 @@ class CompanyIntegrationTest {
         companyRepository.insert(Arrays.asList(company1, company2));
 
         //when
-        mockMvc.perform(get("/companies?page=1&pageSize=2"))
+        mockMvc.perform(
+            get("/companies?page=1&pageSize=2")
+                .param("page", "1")
+                .param("pageSize'", "2")
+        )
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].companyId").isString())
