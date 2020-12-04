@@ -46,7 +46,7 @@ class CompanyServiceTest {
     void should_return_targeted_company_when_get_one_given_a_company_id_in_repository() {
         //given
         Company expected = new Company("1", "alibaba", 100, new ArrayList<>());
-        when(companyRepository.findById(any())).thenReturn(Optional.of(expected));
+        when(companyRepository.findById("1")).thenReturn(Optional.of(expected));
 
         //when
         Company actual = companyService.getOne("1");
@@ -63,7 +63,7 @@ class CompanyServiceTest {
         Employee employee2 = new Employee();
         List<Employee> expected = Arrays.asList(employee1, employee2);
         Company company = new Company(companyId, "Test", 100, expected);
-        when(companyRepository.findById(any())).thenReturn(Optional.of(company));
+        when(companyRepository.findById(companyId)).thenReturn(Optional.of(company));
 
         //when
         List<Employee> actual = companyService.getCompanyEmployees(companyId);

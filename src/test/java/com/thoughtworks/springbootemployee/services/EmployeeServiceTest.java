@@ -46,7 +46,7 @@ class EmployeeServiceTest {
         //given
         Employee expected = new Employee("1", "Tom", 18, "male", 10000);
         Optional<Employee> optionalEmployee = Optional.of(expected);
-        when(employeeRepository.findById(any())).thenReturn(optionalEmployee);
+        when(employeeRepository.findById("1")).thenReturn(optionalEmployee);
 
         //when
         Employee actual = employeeService.getOneById("1");
@@ -74,7 +74,7 @@ class EmployeeServiceTest {
         String gender = "male";
         Employee maleEmployee = new Employee("1", "Tom", 18, "male", 10000);
         List<Employee> expected = Collections.singletonList(maleEmployee);
-        when(employeeRepository.findAllByGender(any())).thenReturn(expected);
+        when(employeeRepository.findAllByGender(gender)).thenReturn(expected);
 
         //when
         List<Employee> actual = employeeService.getAllByGender(gender);
