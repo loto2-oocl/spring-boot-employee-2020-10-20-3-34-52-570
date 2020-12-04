@@ -58,6 +58,21 @@ class EmployeeServiceTest {
     }
 
     @Test
+    void should_throw_employee_not_found_exception_when_get_one_by_id_given_employee_id_not_exists() {
+        //given
+        String employeeId = "1";
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(
+            EmployeeNotFoundException.class,
+            // when
+            () -> employeeService.getOneById(employeeId),
+            "Employee with id:1 not found"
+        );
+    }
+
+    @Test
     void should_return_created_employee_when_create_given_an_empty_repository_and_employee_request() {
         //given
         Employee expected = new Employee("1", "Tom", 18, "male", 10000);
