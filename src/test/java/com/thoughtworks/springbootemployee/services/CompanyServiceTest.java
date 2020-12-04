@@ -149,6 +149,22 @@ class CompanyServiceTest {
     }
 
     @Test
+    void should_throw_company_not_found_exception_when_update_given_company_id_not_exists_and_company_update_request() {
+        //given
+        String companyId = "1";
+        Company company = new Company();
+        when(companyRepository.existsById(companyId)).thenReturn(false);
+
+        //then
+        assertThrows(
+            CompanyNotFoundException.class,
+            //when
+            () -> companyService.update(companyId, company),
+            "Company with id:1 not found"
+        );
+    }
+
+    @Test
     void should_call_repository_delete_once_with_company_id_1_when_delete_given_company_id_1() {
         //given
         String companyId = "1";
