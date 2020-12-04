@@ -34,7 +34,7 @@ public class CompanyService {
 
     public List<Employee> getCompanyEmployees(String companyId) {
         return this.companyRepository.findById(companyId)
-            .orElseThrow(RuntimeException::new)
+            .orElseThrow(() -> new CompanyNotFoundException(companyId))
             .getEmployees();
     }
 
