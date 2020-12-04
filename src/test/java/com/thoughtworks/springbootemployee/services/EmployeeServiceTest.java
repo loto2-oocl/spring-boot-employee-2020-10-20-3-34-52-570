@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -112,6 +114,22 @@ class EmployeeServiceTest {
 
         //then
         verify(employeeRepository, times(1)).save(newEmployee);
+    }
+
+    @Test
+    void should_throw_employee_not_found_exception_when_update_given_employee_id_not_exists() {
+        //given
+        String employeeId = "1";
+        Employee employee = new Employee();
+        when(employeeRepository.existsById(employeeId)).thenReturn(false);
+
+        //then
+        assertThrows(
+            EmployeeNotFoundException.class,
+            // when
+            () -> employeeService.update(employeeId, employee),
+            "Employee with id:1 not found"
+        );
     }
 
     @Test
