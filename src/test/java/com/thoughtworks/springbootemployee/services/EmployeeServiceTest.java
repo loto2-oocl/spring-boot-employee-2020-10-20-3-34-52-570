@@ -90,15 +90,13 @@ class EmployeeServiceTest {
         int pageSize = 2;
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
-        List<Employee> expected = Arrays.asList(employee1, employee2);
-        Page<Employee> employeePage = new PageImpl<>(expected);
-        when(employeeRepository.findAll((Pageable)any())).thenReturn(employeePage);
+        Page<Employee> expected = new PageImpl<>(Arrays.asList(employee1, employee2));
+        when(employeeRepository.findAll((Pageable)any())).thenReturn(expected);
 
         //when
-        List<Employee> actual = employeeService.getAllPaginated(page, pageSize);
+        Page<Employee> actual = employeeService.getAllPaginated(page, pageSize);
 
         //then
-        assertEquals(expected.size(), actual.size());
         assertEquals(expected, actual);
     }
 

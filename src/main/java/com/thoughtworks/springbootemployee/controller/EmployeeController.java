@@ -24,7 +24,7 @@ public class EmployeeController {
             "pageSize"
     })
     public List<Employee> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return this.employeeService.getAllPaginated(page, pageSize);
+        return this.employeeService.getAllPaginated(page, pageSize).getContent();
     }
 
     @GetMapping(params = "gender")
