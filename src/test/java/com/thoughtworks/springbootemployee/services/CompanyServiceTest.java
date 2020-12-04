@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -53,6 +54,21 @@ class CompanyServiceTest {
 
         //then
         assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void should_throw_company_not_found_exception_when_called_get_one_by_id_given_company_id_not_exists() {
+        //given
+        String companyId = "1";
+        when(companyRepository.findById(companyId)).thenReturn(Optional.empty());
+
+        //when
+        assertThrows(
+            CompanyNotFoundException.class,
+            () -> companyService.getOne(companyId),
+            "Company with id:1 not found"
+        );
     }
 
     @Test
