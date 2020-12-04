@@ -80,17 +80,18 @@ class EmployeeIntegrationTest {
                 .param("pageSize", "2")
         )
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(2)))
-            .andExpect(jsonPath("$[0].id").isString())
-            .andExpect(jsonPath("$[0].name").value("Tom"))
-            .andExpect(jsonPath("$[0].age").value(18))
-            .andExpect(jsonPath("$[0].gender").value("Male"))
-            .andExpect(jsonPath("$[0].salary").value(10000))
-            .andExpect(jsonPath("$[1].id").isString())
-            .andExpect(jsonPath("$[1].name").value("Tom1"))
-            .andExpect(jsonPath("$[1].age").value(19))
-            .andExpect(jsonPath("$[1].gender").value("Male"))
-            .andExpect(jsonPath("$[1].salary").value(10001));
+            .andExpect(jsonPath("$.size").value(2))
+            .andExpect(jsonPath("$.number").value(0))
+            .andExpect(jsonPath("$.content[0].id").isString())
+            .andExpect(jsonPath("$.content[0].name").value("Tom"))
+            .andExpect(jsonPath("$.content[0].age").value(18))
+            .andExpect(jsonPath("$.content[0].gender").value("Male"))
+            .andExpect(jsonPath("$.content[0].salary").value(10000))
+            .andExpect(jsonPath("$.content[1].id").isString())
+            .andExpect(jsonPath("$.content[1].name").value("Tom1"))
+            .andExpect(jsonPath("$.content[1].age").value(19))
+            .andExpect(jsonPath("$.content[1].gender").value("Male"))
+            .andExpect(jsonPath("$.content[1].salary").value(10001));
     }
 
     @Test
@@ -142,8 +143,8 @@ class EmployeeIntegrationTest {
             "    \"name\": \"tom\",\n" +
             "    \"age\": 19,\n" +
             "    \"gender\": \"female\",\n" +
-            "    \"companyId\": \"1\",\n" +
-            "    \"salary\": 7000\n" +
+            "    \"salary\": 7000,\n" +
+            "    \"companyId\": \"1\"\n" +
             "}";
 
         //when

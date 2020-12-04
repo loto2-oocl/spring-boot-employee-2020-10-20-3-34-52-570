@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.services.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,10 +44,9 @@ public class EmployeeController {
         "page",
         "pageSize"
     })
-    public List<EmployeeResponse> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        return this.employeeService.getAllPaginated(page, pageSize).getContent().stream()
-            .map(employeeMapper::toResponse)
-            .collect(Collectors.toList());
+    public Page<EmployeeResponse> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return this.employeeService.getAllPaginated(page, pageSize)
+            .map(employeeMapper::toResponse);
     }
 
     @GetMapping(params = "gender")
