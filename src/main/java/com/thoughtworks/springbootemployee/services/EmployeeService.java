@@ -27,7 +27,7 @@ public class EmployeeService {
     public Employee getOneById(String employeeId) {
         return this.employeeRepository
             .findById(employeeId)
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee with id:%s not found", employeeId)));
     }
 
     public List<Employee> getAllByGender(String gender) {
