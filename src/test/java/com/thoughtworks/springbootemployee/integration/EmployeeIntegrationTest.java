@@ -74,9 +74,11 @@ class EmployeeIntegrationTest {
         employeeRepository.insert(Arrays.asList(employee1, employee2, employee3));
 
         //when
-        mockMvc.perform(get("/employees")
-            .param("page", "1")
-            .param("pageSize", "2"))
+        mockMvc.perform(
+            get("/employees")
+                .param("page", "1")
+                .param("pageSize", "2")
+        )
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$[0].id").isString())
