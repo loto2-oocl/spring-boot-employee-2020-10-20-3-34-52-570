@@ -44,8 +44,8 @@ public class CompanyController {
     }
 
     @GetMapping(params = {
-            "page",
-            "pageSize"
+        "page",
+        "pageSize"
     })
     public Page<CompanyResponse> getAllPaginated(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         return this.companyService.getAllPaginated(page, pageSize)
