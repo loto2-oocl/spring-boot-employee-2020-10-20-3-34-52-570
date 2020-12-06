@@ -69,16 +69,18 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CompanyResponse create(@RequestBody CompanyRequest companyRequest) {
-        Company company = this.companyService.create(this.companyMapper.toEntity(companyRequest));
+        Company company = this.companyMapper.toEntity(companyRequest);
+        Company createdCompany = this.companyService.create(company);
 
-        return this.companyMapper.toResponse(company);
+        return this.companyMapper.toResponse(createdCompany);
     }
 
     @PutMapping("/{companyId}")
     public CompanyResponse update(@PathVariable String companyId, @RequestBody CompanyRequest companyRequest) {
-        Company company = this.companyService.update(companyId, this.companyMapper.toEntity(companyRequest));
+        Company company = this.companyMapper.toEntity(companyRequest);
+        Company updatedCompany = this.companyService.update(companyId, company);
 
-        return this.companyMapper.toResponse(company);
+        return this.companyMapper.toResponse(updatedCompany);
     }
 
     @DeleteMapping("/{companyId}")
