@@ -1,25 +1,14 @@
-package com.thoughtworks.springbootemployee.entity;
+package com.thoughtworks.springbootemployee.dto;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-
-@Document
-public class Company {
-    @MongoId(FieldType.OBJECT_ID)
+public class CompanyResponse {
     private String companyId;
     private String companyName;
     private Integer employeesNumber;
 
-    public Company() {
+    public CompanyResponse() {
     }
 
-    public Company(String companyName, Integer employeesNumber) {
-        this.companyName = companyName;
-        this.employeesNumber = employeesNumber;
-    }
-
-    public Company(String companyId, String companyName, Integer employeesNumber) {
+    public CompanyResponse(String companyId, String companyName, Integer employeesNumber) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;

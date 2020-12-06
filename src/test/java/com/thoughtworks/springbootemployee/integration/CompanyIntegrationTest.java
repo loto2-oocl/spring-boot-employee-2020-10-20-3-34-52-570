@@ -105,13 +105,13 @@ class CompanyIntegrationTest {
                 .param("pageSize'", "2")
         )
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(2)))
-            .andExpect(jsonPath("$[0].companyId").isString())
-            .andExpect(jsonPath("$[0].companyName").value("OOCL"))
-            .andExpect(jsonPath("$[0].employeesNumber").value(100))
-            .andExpect(jsonPath("$[1].companyId").isString())
-            .andExpect(jsonPath("$[1].companyName").value("TEST"))
-            .andExpect(jsonPath("$[1].employeesNumber").value(100));
+            .andExpect(jsonPath("$.size").value(2))
+            .andExpect(jsonPath("$.content[0].companyId").isString())
+            .andExpect(jsonPath("$.content[0].companyName").value("OOCL"))
+            .andExpect(jsonPath("$.content[0].employeesNumber").value(100))
+            .andExpect(jsonPath("$.content[1].companyId").isString())
+            .andExpect(jsonPath("$.content[1].companyName").value("TEST"))
+            .andExpect(jsonPath("$.content[1].employeesNumber").value(100));
     }
 
     @Test
