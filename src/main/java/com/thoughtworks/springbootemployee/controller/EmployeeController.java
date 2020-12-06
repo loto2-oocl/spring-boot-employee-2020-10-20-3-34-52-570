@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
-
     private final EmployeeMapper employeeMapper;
 
     public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
